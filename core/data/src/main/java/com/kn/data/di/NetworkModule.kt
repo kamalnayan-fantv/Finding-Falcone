@@ -47,8 +47,6 @@ object NetworkModule {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
             clientBuilder.addInterceptor(httpLoggingInterceptor)
         }
-
-
         return clientBuilder.build()
     }
 
