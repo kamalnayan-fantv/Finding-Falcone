@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         minSdk = 24
-        buildConfigField(String(), "BASE_URL", "https://findfalcone.geektrust.com/")
+        buildConfigField("String", "BASE_URL", "\"https://findfalcone.geektrust.com/\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -27,17 +27,18 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     android.buildFeatures.buildConfig= true
 }
 
 dependencies {
     implementation(project(path= ":core:commons"))
+    implementation(project(path= ":core:domain"))
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
@@ -50,8 +51,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.8.0")
 
-    val hiltVersion=2.42
+    val hiltVersion="2.46.1"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    kapt ("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.4.2")
 
 }

@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("dagger.hilt.android.plugin")
     id ("kotlin-kapt")
+    id ("kotlin-android")
 }
 
 android {
@@ -28,17 +29,25 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 
 dependencies {
     implementation(project(path= "::core:commons"))
+    implementation(project(path= "::core:data"))
+    implementation(project(path= ":core:domain"))
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
@@ -47,8 +56,14 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    val hiltVersion=2.42
+    val hiltVersion="2.46.1"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    kapt ("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.4.2")
 
+    val lifecycleKtx="2.4.0"
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleKtx")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleKtx")
+
+    implementation("androidx.activity:activity-ktx:1.5.1")
 }

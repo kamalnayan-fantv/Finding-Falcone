@@ -2,6 +2,7 @@ package com.kn.data.di
 
 import com.kn.data.BuildConfig
 import com.kn.data.api.FalconService
+import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,18 +26,6 @@ object NetworkModule {
         return createWebService<FalconService>(okHttpClient)
     }
 
-    private inline fun <reified T> createWebService(
-        okHttpClient: OkHttpClient,
-        url: String = BuildConfig.BASE_URL
-    ): T {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(url)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        return retrofit.create(T::class.java)
-    }
-
 
     @Singleton
     @Provides
@@ -50,5 +39,18 @@ object NetworkModule {
         return clientBuilder.build()
     }
 
+
+    private inline fun <reified T> createWebService(
+        okHttpClient: OkHttpClient,
+        url: String = BuildConfig.BASE_URL
+    ): T {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(url)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
+            .build()
+        return retrofit.create(T::class.java)
+    }
 
 }

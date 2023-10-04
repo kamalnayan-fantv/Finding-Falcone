@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 Created on: 03/10/23
  **/
 @Parcelize
-data class VehicleResponse(
+data class VehicleEntity(
     val name: String,
     @SerializedName("total_no")
     val totalNumber: Int,

@@ -3,6 +3,7 @@ plugins {
     id("com.android.application") version "8.1.1" apply false
     id("org.jetbrains.kotlin.android") version "1.9.0" apply false
     id("com.android.library") version "8.1.1" apply false
-    id ("com.google.dagger.hilt.android") version "2.42" apply false
+    id ("com.google.dagger.hilt.android") version "2.46.1" apply false
     kotlin("kapt") version "1.9.10"
+//    kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.4.2") v
 }

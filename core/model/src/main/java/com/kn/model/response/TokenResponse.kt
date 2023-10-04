@@ -4,10 +4,9 @@ import com.kn.commons.base.BaseResponse
 import kotlinx.parcelize.Parcelize
 
 /** @Author Kamal Nayan
-Created on: 03/10/23
+Created on: 04/10/23
  **/
 @Parcelize
-data class PlanetsResponse(
- val name:String,
- val distance:Int,
-):BaseResponse()
+data class TokenResponse(
+ val token: String
+) : BaseResponse()
