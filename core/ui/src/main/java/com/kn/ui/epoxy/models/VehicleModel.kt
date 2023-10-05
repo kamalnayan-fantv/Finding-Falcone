@@ -23,7 +23,7 @@ abstract class VehicleModel : BaseEpoxyModel<LayoutEpoxyVehicleItemBinding>(R.la
     private fun setupUi(binding: LayoutEpoxyVehicleItemBinding) {
         with(binding){
             tvVehicleName.text = vehicleItem?.name
-            tvSpeed.text = vehicleItem?.speed.toString()
+            tvSpeed.text = binding.root.context.getString(R.string.format_vehicle_speed,vehicleItem?.speed.toString())
         }
     }
 }

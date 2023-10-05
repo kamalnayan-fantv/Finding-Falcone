@@ -1,18 +1,10 @@
 package com.kn.findingthefalcon
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import androidx.activity.viewModels
 import com.kn.ui.base.BaseActivity
 import com.kn.findingthefalcon.databinding.ActivityMainBinding
 import com.kn.findingthefalcon.epoxy.controller.PlanetEpoxyController
-import com.kn.findingthefalcon.epoxy.models.planetWithVehicle
-import com.kn.model.response.PlanetsEntity
-import com.kn.model.response.VehicleEntity
-import com.kn.ui.epoxy.models.VehicleModel_
-import com.kn.ui.epoxy.models.vehicle
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

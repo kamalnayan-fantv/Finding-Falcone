@@ -9,11 +9,14 @@
         <item name="base_color">@color/base_color_light</item>
         <item name="text_title_color">@color/black</item>
         <item name="text_subtitle_color">@color/md_grey_400</item>
+        <item name="stroke_color">@color/md_grey_600</item>
     </style>
 
     <style name="Base.Theme.FindingFalcon.Dark">
         <item name="base_color">@color/base_color_dark</item>
         <item name="text_title_color">@color/white</item>
         <item name="text_subtitle_color">@color/md_grey_400</item>
+        <item name="stroke_color">@color/md_grey_500</item>
+
     </style>
 </resources>
