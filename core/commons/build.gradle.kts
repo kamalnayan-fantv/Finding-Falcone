@@ -2,8 +2,11 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id ("kotlin-parcelize")
+    id ("kotlin-kapt")
 }
-
+kapt {
+    correctErrorTypes = true
+}
 android {
     namespace = "com.kn.commons"
     compileSdk = 33
@@ -46,4 +49,5 @@ dependencies {
     //gson
     api("com.google.code.gson:gson:2.10")
     api("com.github.skydoves:sandwich:1.3.9")
+
 }

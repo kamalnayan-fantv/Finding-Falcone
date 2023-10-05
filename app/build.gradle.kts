@@ -42,12 +42,19 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    dataBinding{
+        enable=true
+    }
+}
+kapt {
+    correctErrorTypes = true
 }
 
 dependencies {
     implementation(project(path= "::core:commons"))
     implementation(project(path= "::core:data"))
     implementation(project(path= ":core:domain"))
+    implementation(project(path= "::core:ui"))
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
@@ -66,4 +73,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleKtx")
 
     implementation("androidx.activity:activity-ktx:1.5.1")
+
+    val epoxyVersion ="5.1.1"
+    implementation("com.airbnb.android:epoxy:$epoxyVersion")
+    implementation("com.airbnb.android:epoxy-databinding:$epoxyVersion")
+    kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
+
 }

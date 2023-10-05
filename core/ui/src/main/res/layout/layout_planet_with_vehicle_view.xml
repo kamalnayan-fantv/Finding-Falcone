@@ -47,6 +47,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/_12sdp"
+            tools:listitem="@layout/layout_epoxy_vehicle_item"
+            app:itemSpacing="@dimen/_8sdp"
             app:layout_constraintTop_toBottomOf="@id/tv_distance"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

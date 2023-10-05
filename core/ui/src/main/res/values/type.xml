@@ -49,18 +49,22 @@
         <item name="android:textSize">@dimen/text_size_title</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/noto_sans_bold</item>
+        <item name="android:textColor">?text_title_color</item>
     </style>
 
     <style name="TextAppearance.AppTheme.Title" parent="TextAppearance.AppTheme.Headline1">
         <item name="android:textSize">@dimen/text_size_title</item>
         <item name="android:textStyle">normal</item>
         <item name="android:fontFamily">@font/noto_sans</item>
+        <item name="android:textColor">?text_title_color</item>
+
     </style>
 
     <style name="TextAppearance.AppTheme.Planet.SubTitle" parent="TextAppearance.AppTheme.Subtitle1">
         <item name="android:textSize">@dimen/text_size_subtitle</item>
         <item name="android:textStyle">normal</item>
         <item name="android:fontFamily">@font/noto_sans</item>
+        <item name="android:textColor">?text_subtitle_color</item>
     </style>
 
 </resources>

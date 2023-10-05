@@ -1,9 +1,13 @@
+import org.jetbrains.kotlin.storage.CacheResetOnProcessCanceled.enabled
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id ("kotlin-kapt")
 }
-
+kapt {
+    correctErrorTypes = true
+}
 android {
     namespace = "com.kn.ui"
     compileSdk = 33
@@ -31,6 +35,10 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    dataBinding {
+        enable=true
+    }
 }
 
 dependencies {
@@ -43,12 +51,13 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    val epoxyVersion ="5.0.0"
+    val scalableSizeVersion = "1.1.0"
+    api("com.intuit.sdp:sdp-android:$scalableSizeVersion")
+    api("com.intuit.ssp:ssp-android:$scalableSizeVersion")
+
+    val epoxyVersion ="5.1.1"
     implementation("com.airbnb.android:epoxy:$epoxyVersion")
     implementation("com.airbnb.android:epoxy-databinding:$epoxyVersion")
     kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
 
-    val scalableSizeVersion = "1.1.0"
-    api("com.intuit.sdp:sdp-android:$scalableSizeVersion")
-    api("com.intuit.ssp:ssp-android:$scalableSizeVersion")
 }
