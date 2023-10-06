@@ -2,4 +2,5 @@
 <resources>
     <string name="format_vehicle_speed">%s MM/hour</string>
     <string name="format_vehicle_not_available">All %s are already being used.</string>
+    <string name="error_max_planets_selected">Maximum number of planets have been selected.</string>
 </resources>

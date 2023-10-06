@@ -12,7 +12,6 @@ import com.kn.model.response.VehicleEntity
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -66,8 +65,43 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Checks if maximum number of planets have been selected or not.
+     * If yes then emit [VehicleSelectionEvent.MaximumPlanetsSelected] and return true
+     * else just return false
+     */
+    private fun ifMaxPlanetSelected(): Boolean {
+        return _selectionMap.keys.count() >= 4
+    }
+
     private fun selectVehicleForPlanet(vehicle: VehicleEntity, planet: PlanetsEntity) {
-        _selectionMap[planet.name] = vehicle.name
+        if (_selectionMap.keys.contains(planet.name)) {
+            /*
+            * Means the selected vehicle card is again clicked hence
+            * we need to de-select it. so removing it from map.
+            */
+            if(_selectionMap[planet.name] == vehicle.name){
+                _selectionMap.remove(planet.name)
+            }else{
+                /*
+                 * Means just another vehicle is selected so we are just
+                 * updating the value for this key
+                */
+                _selectionMap[planet.name] = vehicle.name
+            }
+        } else {
+            /*
+             * Means vehicle for this planet was not selected earlier
+             * so we will first check if Max Planet Selected then return
+             * otherwise select that vehicle for this planet
+             */
+            if(ifMaxPlanetSelected()){
+                viewModelScope.launch { _selectionEvent.emit(VehicleSelectionEvent.MaximumPlanetsSelected) }
+                return
+            }
+            _selectionMap[planet.name] = vehicle.name
+        }
+
         viewModelScope.launch {
             _selectionEvent.emit(
                 VehicleSelectionEvent.VehicleSelected(

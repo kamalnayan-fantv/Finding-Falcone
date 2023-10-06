@@ -8,6 +8,7 @@ import com.kn.ui.base.BaseActivity
 import com.kn.findingthefalcon.databinding.ActivityMainBinding
 import com.kn.findingthefalcon.epoxy.controller.PlanetEpoxyController
 import com.kn.findingthefalcon.event.VehicleSelectionEvent
+import com.kn.ui.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -73,8 +74,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
 
             is VehicleSelectionEvent.VehicleNotAvailable ->{
-                Toast.makeText(this,getString(com.kn.ui.R.string.format_vehicle_not_available,event.vehicleName),Toast.LENGTH_LONG).show()
+                Toast.makeText(this,getString(R.string.format_vehicle_not_available,event.vehicleName),Toast.LENGTH_LONG).show()
             }
+
+            VehicleSelectionEvent.MaximumPlanetsSelected ->   Toast.makeText(this,getString(R.string.error_max_planets_selected),Toast.LENGTH_LONG).show()
         }
     }
 

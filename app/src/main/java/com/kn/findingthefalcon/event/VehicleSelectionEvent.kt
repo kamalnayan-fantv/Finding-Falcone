@@ -9,4 +9,6 @@ sealed class VehicleSelectionEvent{
 
  data class VehicleNotAvailable(val vehicleName:String):VehicleSelectionEvent()
 
+ data object MaximumPlanetsSelected:VehicleSelectionEvent()
+
 }
