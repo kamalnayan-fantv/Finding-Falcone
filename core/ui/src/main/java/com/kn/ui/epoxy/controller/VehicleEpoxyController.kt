@@ -16,6 +16,8 @@ class VehicleEpoxyController : AsyncEpoxyController() {
             requestModelBuild()
         }
 
+    var onVehicleClick:((VehicleEntity)->Unit)?=null
+
     override fun buildModels() {
         buildVehiclesView()
     }
@@ -25,6 +27,9 @@ class VehicleEpoxyController : AsyncEpoxyController() {
             vehicle {
                 id("vehicle_$index")
                 vehicleItem(vehicleEntity)
+                onVehicleClick {
+                    this@VehicleEpoxyController.onVehicleClick?.invoke(it)
+                }
             }
         }
     }

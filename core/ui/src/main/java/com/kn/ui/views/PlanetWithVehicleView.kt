@@ -28,6 +28,9 @@ class PlanetWithVehicleView @JvmOverloads constructor(
     private var filter: EligibleVehicleFilter = DefaultVehicleFilter()
     private val vehicleEpoxyController = VehicleEpoxyController()
     private var planetItem: PlanetsEntity? = null
+    private var selectedVehicle:VehicleEntity?=null
+    private var onVehicleClick:((VehicleEntity)->Unit)?=null
+
 
     init {
         binding = DataBindingUtil.inflate(
@@ -37,7 +40,20 @@ class PlanetWithVehicleView @JvmOverloads constructor(
             true
         )
         binding.shipsEpoxy.setController(vehicleEpoxyController)
+        setListeners()
         // LayoutPlanetWithShipViewBinding.inflate(LayoutInflater.from(context), this, true)
+    }
+
+    private fun setListeners() {
+        with(binding){
+
+        }
+
+        with(vehicleEpoxyController){
+            this.onVehicleClick={
+                this@PlanetWithVehicleView.onVehicleClick?.invoke(it)
+            }
+        }
     }
 
     fun setPlanetName(name: String) {
@@ -63,6 +79,14 @@ class PlanetWithVehicleView @JvmOverloads constructor(
         buildVehiclesView()
     }
 
+    fun setSelectedVehicle(vehicle:VehicleEntity){
+        selectedVehicle=vehicle
+        buildVehiclesView()
+    }
+
+    fun setVehicleClickListener( onVehicleClick:((VehicleEntity)->Unit)){
+        this.onVehicleClick = onVehicleClick
+    }
 
     private fun buildVehiclesView() {
         with(binding) {

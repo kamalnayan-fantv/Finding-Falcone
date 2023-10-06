@@ -1,11 +1,16 @@
 package com.kn.findingthefalcon
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.kn.ui.base.BaseActivity
 import com.kn.findingthefalcon.databinding.ActivityMainBinding
 import com.kn.findingthefalcon.epoxy.controller.PlanetEpoxyController
+import com.kn.findingthefalcon.event.VehicleSelectionEvent
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -20,6 +25,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         initUi()
         getData()
         setObservers()
+        setListeners()
+    }
+
+    private fun setListeners() {
+        with(controller){
+            onVehicleClicked={vehicle,planet->
+                viewModel.onVehicleClick(vehicle,planet)
+            }
+        }
     }
 
     private fun initUi() {
@@ -42,6 +56,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 response?.let {
                     controller.vehicleList = it
                 }
+            }
+
+            lifecycleScope.launch {
+                selectionEvent.collectLatest {event->
+                  handleSelectionEvent(event)
+                }
+            }
+        }
+    }
+
+    private fun handleSelectionEvent(event: VehicleSelectionEvent) {
+        when(event){
+            is VehicleSelectionEvent.VehicleSelected ->{
+                controller.selectionMap=event.data
+            }
+
+            is VehicleSelectionEvent.VehicleNotAvailable ->{
+                Toast.makeText(this,getString(com.kn.ui.R.string.format_vehicle_not_available,event.vehicleName),Toast.LENGTH_LONG).show()
             }
         }
     }

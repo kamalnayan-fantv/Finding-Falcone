@@ -25,6 +25,9 @@ abstract class PlanetWithVehicleModel : EpoxyModelWithHolder<PlanetWithVehicleMo
     @EpoxyAttribute
     var planetItem: PlanetsEntity? = null
 
+    @EpoxyAttribute
+    var onVehicleClicked :((VehicleEntity,PlanetsEntity)->Unit)?=null
+
     override fun bind(holder: Holder) {
         super.bind(holder)
         setupUi(holder.binding)
@@ -40,6 +43,9 @@ abstract class PlanetWithVehicleModel : EpoxyModelWithHolder<PlanetWithVehicleMo
                     setPlanetItem(planet)
                     setPlanetName(planet.name)
                     setPlanetDistance(planet.distance)
+                    setVehicleClickListener {
+                        onVehicleClicked?.invoke(it,planet)
+                    }
                 }
             }
         }

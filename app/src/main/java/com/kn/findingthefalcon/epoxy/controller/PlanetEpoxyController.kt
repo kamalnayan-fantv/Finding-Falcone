@@ -13,6 +13,14 @@ Created on: 05/10/23
  **/
 class PlanetEpoxyController : AsyncEpoxyController() {
 
+    var selectionMap: HashMap<String, String>? = null
+        set(value) {
+            field = value
+            requestModelBuild()
+        }
+
+    var onVehicleClicked :((VehicleEntity, PlanetsEntity)->Unit)?=null
+
     var planetsList: List<PlanetsEntity>? = null
         set(value) {
             field= value
@@ -30,16 +38,14 @@ class PlanetEpoxyController : AsyncEpoxyController() {
 
     private fun buildPlanetViews() {
         planetsList?.forEachIndexed { index, planetItem ->
-           PlanetWithVehicleModel_().apply {
-               id("planet_with_vehicle_$index")
-               vehicleList(this@PlanetEpoxyController.vehicleList)
-               planetItem(planetItem)
-           }.addTo(this)
-            /* planetWithVehicle {
-                id("planet_with_vehicle_$index")
-                vehicleList(this@PlanetEpoxyController.vehicleList)
-                planetItem(planetItem)
-            }*/
+             planetWithVehicle {
+                 id("planet_with_vehicle_$index")
+                 vehicleList(this@PlanetEpoxyController.vehicleList)
+                 planetItem(planetItem)
+                 onVehicleClicked { vehicleEntity, planetsEntity ->
+                     this@PlanetEpoxyController.onVehicleClicked?.invoke(vehicleEntity,planetsEntity)
+                 }
+            }
         }
     }
 }

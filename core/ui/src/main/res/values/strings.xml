@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="format_vehicle_speed">%s MM/hour</string>
+    <string name="format_vehicle_not_available">All %s are already being used.</string>
 </resources>
