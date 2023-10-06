@@ -2,6 +2,7 @@ package com.kn.findingthefalcon.epoxy.controller
 
 import com.airbnb.epoxy.AsyncEpoxyController
 import com.airbnb.epoxy.EpoxyController
+import com.kn.commons.utils.extensions.Empty
 import com.kn.findingthefalcon.epoxy.models.PlanetWithVehicleModel
 import com.kn.findingthefalcon.epoxy.models.PlanetWithVehicleModel_
 import com.kn.findingthefalcon.epoxy.models.planetWithVehicle
@@ -42,6 +43,7 @@ class PlanetEpoxyController : AsyncEpoxyController() {
                  id("planet_with_vehicle_$index")
                  vehicleList(this@PlanetEpoxyController.vehicleList)
                  planetItem(planetItem)
+                 selectedVehicle(this@PlanetEpoxyController.selectionMap?.getOrDefault(planetItem.name,String.Empty)?:String.Empty)
                  onVehicleClicked { vehicleEntity, planetsEntity ->
                      this@PlanetEpoxyController.onVehicleClicked?.invoke(vehicleEntity,planetsEntity)
                  }

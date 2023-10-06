@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:minWidth="@dimen/_150sdp"
         android:clickable="true"
+        android:id="@+id/parent_container"
         android:focusable="true"
         android:background="@drawable/bg_round_unselected"
         android:padding="@dimen/_13sdp">

@@ -16,6 +16,12 @@ class VehicleEpoxyController : AsyncEpoxyController() {
             requestModelBuild()
         }
 
+    var selectedVehicle:VehicleEntity?=null
+        set(value){
+            field=value
+            requestModelBuild()
+        }
+
     var onVehicleClick:((VehicleEntity)->Unit)?=null
 
     override fun buildModels() {
@@ -27,6 +33,7 @@ class VehicleEpoxyController : AsyncEpoxyController() {
             vehicle {
                 id("vehicle_$index")
                 vehicleItem(vehicleEntity)
+                showAsSelected(vehicleEntity.name==this@VehicleEpoxyController.selectedVehicle?.name)
                 onVehicleClick {
                     this@VehicleEpoxyController.onVehicleClick?.invoke(it)
                 }

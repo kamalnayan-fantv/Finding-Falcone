@@ -1,4 +1,4 @@
-package com.kn.commons.utils.view.extensions
+package com.kn.commons.utils.extensions
 
 import android.annotation.SuppressLint
 import android.view.MotionEvent

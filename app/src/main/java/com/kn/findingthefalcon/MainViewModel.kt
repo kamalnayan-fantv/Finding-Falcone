@@ -62,6 +62,17 @@ class MainViewModel @Inject constructor(
      */
     fun onVehicleClick(vehicle: VehicleEntity, planet: PlanetsEntity) {
         viewModelScope.launch {
+            if (_selectionMap.keys.contains(planet.name)) {
+                /*
+                * Means the selected vehicle card is again clicked hence
+                * we need to de-select it. so removing it from map.
+                */
+                if(_selectionMap[planet.name] == vehicle.name){
+                    _selectionMap.remove(planet.name)
+                    _selectionEvent.emit(VehicleSelectionEvent.VehicleSelected(_selectionMap))
+                    return@launch
+                }
+            }
             if (isVehicleAvailable(vehicle)) {
                 selectVehicleForPlanet(vehicle, planet)
             } else {
@@ -71,32 +82,17 @@ class MainViewModel @Inject constructor(
     }
 
     private fun selectVehicleForPlanet(vehicle: VehicleEntity, planet: PlanetsEntity) {
-        if (_selectionMap.keys.contains(planet.name)) {
-            /*
-            * Means the selected vehicle card is again clicked hence
-            * we need to de-select it. so removing it from map.
-            */
-            if(_selectionMap[planet.name] == vehicle.name){
-                _selectionMap.remove(planet.name)
-            }else{
-                /*
-                 * Means just another vehicle is selected so we are just
-                 * updating the value for this key
-                */
-                _selectionMap[planet.name] = vehicle.name
-            }
-        } else {
-            /*
-             * Means vehicle for this planet was not selected earlier
-             * so we will first check if Max Planet Selected then return
-             * otherwise select that vehicle for this planet
-             */
-            if(ifMaxPlanetSelected()){
-                viewModelScope.launch { _selectionEvent.emit(VehicleSelectionEvent.MaximumPlanetsSelected) }
-                return
-            }
-            _selectionMap[planet.name] = vehicle.name
+        /*
+         * Means vehicle for this planet was not selected earlier
+         * so we will first check if Max Planet Selected then return
+         * otherwise select that vehicle for this planet
+         */
+        if (ifMaxPlanetSelected()) {
+            viewModelScope.launch { _selectionEvent.emit(VehicleSelectionEvent.MaximumPlanetsSelected) }
+            return
         }
+        _selectionMap[planet.name] = vehicle.name
+
 
         viewModelScope.launch {
             _selectionEvent.emit(

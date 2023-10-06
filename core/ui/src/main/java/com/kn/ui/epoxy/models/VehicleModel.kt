@@ -2,7 +2,7 @@ package com.kn.ui.epoxy.models
 
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
-import com.kn.commons.utils.view.extensions.setSafeClickListener
+import com.kn.commons.utils.extensions.setSafeClickListener
 import com.kn.ui.base.BaseEpoxyModel
 import com.kn.model.response.VehicleEntity
 import com.kn.ui.R
@@ -19,6 +19,9 @@ abstract class VehicleModel : BaseEpoxyModel<LayoutEpoxyVehicleItemBinding>(R.la
 
     @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
     var onVehicleClick:((VehicleEntity)->Unit)?=null
+
+    @EpoxyAttribute
+    var showAsSelected:Boolean=false
 
     override fun LayoutEpoxyVehicleItemBinding.bind() {
         setupUi(this)
@@ -37,6 +40,11 @@ abstract class VehicleModel : BaseEpoxyModel<LayoutEpoxyVehicleItemBinding>(R.la
         with(binding){
             tvVehicleName.text = vehicleItem?.name
             tvSpeed.text = binding.root.context.getString(R.string.format_vehicle_speed,vehicleItem?.speed.toString())
+            if(showAsSelected){
+                binding.parentContainer.setBackgroundResource(R.drawable.bg_round_selected)
+            }else{
+                binding.parentContainer.setBackgroundResource(R.drawable.bg_round_unselected)
+            }
         }
     }
 }

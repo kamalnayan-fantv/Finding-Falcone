@@ -79,7 +79,7 @@ class PlanetWithVehicleView @JvmOverloads constructor(
         buildVehiclesView()
     }
 
-    fun setSelectedVehicle(vehicle:VehicleEntity){
+    fun setSelectedVehicle(vehicle:VehicleEntity?){
         selectedVehicle=vehicle
         buildVehiclesView()
     }
@@ -90,7 +90,14 @@ class PlanetWithVehicleView @JvmOverloads constructor(
 
     private fun buildVehiclesView() {
         with(binding) {
-            vehicleEpoxyController.vehicleList = filter.getEligibleVehicles(planetDistance = planetItem?.distance?:0,vehicles?: emptyList())
+            vehicleEpoxyController.apply {
+                vehicleList = filter.getEligibleVehicles(
+                    planetDistance = planetItem?.distance ?: 0,
+                    vehicles ?: emptyList()
+                )
+
+                selectedVehicle = this@PlanetWithVehicleView.selectedVehicle
+            }
         }
     }
 

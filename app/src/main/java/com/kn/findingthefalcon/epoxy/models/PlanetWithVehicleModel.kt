@@ -5,6 +5,7 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
+import com.kn.commons.utils.extensions.Empty
 import com.kn.ui.base.BaseEpoxyModel
 import com.kn.findingthefalcon.R
 import com.kn.findingthefalcon.databinding.LayoutEpoxyPlanetItemBinding
@@ -26,7 +27,10 @@ abstract class PlanetWithVehicleModel : EpoxyModelWithHolder<PlanetWithVehicleMo
     var planetItem: PlanetsEntity? = null
 
     @EpoxyAttribute
-    var onVehicleClicked :((VehicleEntity,PlanetsEntity)->Unit)?=null
+    var onVehicleClicked: ((VehicleEntity, PlanetsEntity) -> Unit)? = null
+
+    @EpoxyAttribute
+    var selectedVehicle: String = String.Empty
 
     override fun bind(holder: Holder) {
         super.bind(holder)
@@ -43,12 +47,20 @@ abstract class PlanetWithVehicleModel : EpoxyModelWithHolder<PlanetWithVehicleMo
                     setPlanetItem(planet)
                     setPlanetName(planet.name)
                     setPlanetDistance(planet.distance)
+                    setSelectedVehicle(getSelectedVehicle())
                     setVehicleClickListener {
-                        onVehicleClicked?.invoke(it,planet)
+                        onVehicleClicked?.invoke(it, planet)
                     }
                 }
             }
         }
+    }
+
+    private fun getSelectedVehicle(): VehicleEntity? {
+        return if (selectedVehicle == String.Empty)
+            null
+        else
+            vehicleList?.find { it.name==selectedVehicle }
     }
 
     inner class Holder : EpoxyHolder() {
