@@ -55,6 +55,11 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    /**
+     * When a vehicle item is clicked then we check that clicked vehicle is available
+     * or not using [isVehicleAvailable] and maximum number of planets are selected
+     * or not using [ifMaxPlanetSelected]
+     */
     fun onVehicleClick(vehicle: VehicleEntity, planet: PlanetsEntity) {
         viewModelScope.launch {
             if (isVehicleAvailable(vehicle)) {
@@ -63,15 +68,6 @@ class MainViewModel @Inject constructor(
                 _selectionEvent.emit(VehicleSelectionEvent.VehicleNotAvailable(vehicle.name))
             }
         }
-    }
-
-    /**
-     * Checks if maximum number of planets have been selected or not.
-     * If yes then emit [VehicleSelectionEvent.MaximumPlanetsSelected] and return true
-     * else just return false
-     */
-    private fun ifMaxPlanetSelected(): Boolean {
-        return _selectionMap.keys.count() >= 4
     }
 
     private fun selectVehicleForPlanet(vehicle: VehicleEntity, planet: PlanetsEntity) {
@@ -111,6 +107,21 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Checks if maximum number of planets have been selected or not.
+     * If yes then emit [VehicleSelectionEvent.MaximumPlanetsSelected] and return true
+     * else just return false
+     */
+    private fun ifMaxPlanetSelected(): Boolean {
+        return _selectionMap.keys.count() >= 4
+    }
+
+
+    /**
+     * Checks the vehicle total number is greater than the count of
+     * vehicle in selected state. Otherwise all vehicles are in use.
+     * hence, not available.
+     */
     private fun isVehicleAvailable(vehicle: VehicleEntity): Boolean {
         val inUseVehiclesCount = _selectionMap.values?.count { it == vehicle.name }?:return false
         return inUseVehiclesCount < vehicle.totalNumber
