@@ -1,7 +1,6 @@
-package com.kn.commons.utils
+package com.kn.commons.utils.view
 
 import android.app.Activity
-import android.service.voice.VoiceInteractionSession.ActivityId
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle

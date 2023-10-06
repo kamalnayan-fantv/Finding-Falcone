@@ -2,6 +2,7 @@ package com.kn.ui.epoxy.models
 
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
+import com.kn.commons.utils.view.extensions.setSafeClickListener
 import com.kn.ui.base.BaseEpoxyModel
 import com.kn.model.response.VehicleEntity
 import com.kn.ui.R
@@ -16,8 +17,20 @@ abstract class VehicleModel : BaseEpoxyModel<LayoutEpoxyVehicleItemBinding>(R.la
     @EpoxyAttribute
     var vehicleItem:VehicleEntity?=null
 
+    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
+    var onVehicleClick:((VehicleEntity)->Unit)?=null
+
     override fun LayoutEpoxyVehicleItemBinding.bind() {
         setupUi(this)
+        setListeners(this)
+    }
+
+    private fun setListeners(binding: LayoutEpoxyVehicleItemBinding) {
+        with(binding){
+            root.setSafeClickListener{
+                vehicleItem?.let { it1 -> onVehicleClick?.invoke(it1) }
+            }
+        }
     }
 
     private fun setupUi(binding: LayoutEpoxyVehicleItemBinding) {
