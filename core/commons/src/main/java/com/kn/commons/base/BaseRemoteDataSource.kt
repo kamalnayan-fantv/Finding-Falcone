@@ -1,6 +1,8 @@
 package com.kn.commons.base
 
 import com.skydoves.sandwich.ApiResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /** @Author Kamal Nayan
 Created on: 04/10/23
@@ -20,7 +22,7 @@ abstract class BaseRemoteDataSource {
  suspend fun <T> getResponse(
   request: suspend () -> ApiResponse<T>,
  ): ApiResponse<T> {
-  return request.invoke()
+  return withContext(Dispatchers.IO){ request.invoke() }
  }
 
 }

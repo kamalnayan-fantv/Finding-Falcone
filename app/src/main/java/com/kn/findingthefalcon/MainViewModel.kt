@@ -134,4 +134,10 @@ class MainViewModel @Inject constructor(
         val inUseVehiclesCount = _selectionMap.values?.count { it == vehicle.name }?:return false
         return inUseVehiclesCount < vehicle.totalNumber
     }
+
+    fun getToken(){
+        viewModelScope.launch {
+
+        }
+    }
 }
