@@ -37,6 +37,9 @@ class MainViewModel @Inject constructor(
 
     private val _selectionMap= HashMap<String,String>()
 
+    /**
+     * Fetches planets data from remote
+     */
     fun getPlanets() {
         viewModelScope.launch {
             val response = getPlanetsUseCase.invoke()
@@ -46,6 +49,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Fetches vehicles data from remote
+     */
     fun getVehicles() {
         viewModelScope.launch {
             val response = getVehiclesUseCase.invoke()
@@ -56,9 +62,10 @@ class MainViewModel @Inject constructor(
     }
 
     /**
-     * When a vehicle item is clicked then we check that clicked vehicle is available
-     * or not using [isVehicleAvailable] and maximum number of planets are selected
-     * or not using [ifMaxPlanetSelected]
+     * When a vehicle item is clicked then we check that clicked vehicle is already
+     * selected for that planet or not. If yes the de-select otherwise check if it is
+     * available or not using [isVehicleAvailable] then [selectVehicleForPlanet] function
+     * handles further.
      */
     fun onVehicleClick(vehicle: VehicleEntity, planet: PlanetsEntity) {
         viewModelScope.launch {
@@ -81,6 +88,11 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    /**
+     * First check maximum number of planets are selected or not using [ifMaxPlanetSelected]
+     * if selected then show error otherwise assign [vehicle] to the [planet] by updating
+     * [_selectionMap].
+     */
     private fun selectVehicleForPlanet(vehicle: VehicleEntity, planet: PlanetsEntity) {
         /*
          * Means vehicle for this planet was not selected earlier
