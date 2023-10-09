@@ -2,6 +2,8 @@ package com.kn.data.remote
 
 import com.kn.commons.base.BaseRemoteDataSource
 import com.kn.data.api.FalconService
+import com.kn.model.body.FindFalconBody
+import com.kn.model.response.FindFalconResponse
 import com.kn.model.response.PlanetsEntity
 import com.kn.model.response.TokenResponse
 import com.kn.model.response.VehicleEntity
@@ -28,5 +30,9 @@ class FalconRemoteDataSource @Inject constructor(private val falconService: Falc
 
     suspend fun getToken(): ApiResponse<TokenResponse> {
         return falconService.getToken()
+    }
+
+    suspend fun findFalcon(falconBody: FindFalconBody):ApiResponse<FindFalconResponse>{
+        return falconService.findFalcon(falconBody)
     }
 }

@@ -1,9 +1,12 @@
 package com.kn.data.api
 
+import com.kn.model.body.FindFalconBody
+import com.kn.model.response.FindFalconResponse
 import com.kn.model.response.PlanetsEntity
 import com.kn.model.response.TokenResponse
 import com.kn.model.response.VehicleEntity
 import com.skydoves.sandwich.ApiResponse
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
@@ -19,4 +22,7 @@ interface FalconService {
 
     @GET("vehicles")
     suspend fun getVehicles():ApiResponse<List<VehicleEntity>>
+
+    @POST("find")
+    suspend fun findFalcon(@Body body:FindFalconBody):ApiResponse<FindFalconResponse>
 }

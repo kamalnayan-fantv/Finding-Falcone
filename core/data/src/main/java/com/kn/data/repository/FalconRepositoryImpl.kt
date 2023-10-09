@@ -2,6 +2,8 @@ package com.kn.data.repository
 
 import com.kn.data.remote.FalconRemoteDataSource
 import com.kn.domain.repository.FalconRepository
+import com.kn.model.body.FindFalconBody
+import com.kn.model.response.FindFalconResponse
 import com.kn.model.response.PlanetsEntity
 import com.kn.model.response.TokenResponse
 import com.kn.model.response.VehicleEntity
@@ -26,6 +28,10 @@ class FalconRepositoryImpl @Inject constructor(
 
     override suspend fun getToken(): ApiResponse<TokenResponse> {
         return falconRemoteDataSource.getToken()
+    }
+
+    override suspend fun findFalcon(falconBody: FindFalconBody): ApiResponse<FindFalconResponse> {
+        return falconRemoteDataSource.findFalcon(falconBody)
     }
 
 }
