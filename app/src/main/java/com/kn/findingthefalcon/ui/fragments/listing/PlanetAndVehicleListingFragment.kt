@@ -2,9 +2,12 @@ package com.kn.findingthefalcon.ui.fragments.listing
 
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.kn.commons.utils.extensions.setSafeClickListener
 import com.kn.findingthefalcon.databinding.FragmentPlanetAndVehicleListingBinding
 import com.kn.findingthefalcon.epoxy.controller.PlanetEpoxyController
+import com.kn.findingthefalcon.event.FindingFalconStatusEvent
 import com.kn.findingthefalcon.event.VehicleSelectionEvent
 import com.kn.ui.R
 import com.kn.ui.base.BaseFragment
@@ -48,6 +51,12 @@ class PlanetAndVehicleListingFragment : BaseFragment<FragmentPlanetAndVehicleLis
                 viewModel.onVehicleClick(vehicle,planet)
             }
         }
+
+        with(binding){
+            btnFind.setSafeClickListener {
+                viewModel.findFalcon()
+            }
+        }
     }
 
     override fun setObservers() {
@@ -65,9 +74,27 @@ class PlanetAndVehicleListingFragment : BaseFragment<FragmentPlanetAndVehicleLis
             }
 
             lifecycleScope.launch {
-                selectionEvent.collectLatest {event->
+                selectionEvent.flowWithLifecycle(lifecycle).collectLatest {event->
                     handleSelectionEvent(event)
                 }
+
+                findFalconEvent.flowWithLifecycle(lifecycle).collectLatest {event->
+                    handleFindFalconResultEvent(event)
+                }
+            }
+        }
+    }
+
+    private fun handleFindFalconResultEvent(event: FindingFalconStatusEvent) {
+        when(event){
+            is FindingFalconStatusEvent.Error -> {
+                Toast.makeText(requireContext(),event.toString(),Toast.LENGTH_LONG).show()
+            }
+            is FindingFalconStatusEvent.Found -> {
+                Toast.makeText(requireContext(),event.toString(),Toast.LENGTH_LONG).show()
+            }
+            FindingFalconStatusEvent.NotFound -> {
+                Toast.makeText(requireContext(),event.toString(),Toast.LENGTH_LONG).show()
             }
         }
     }

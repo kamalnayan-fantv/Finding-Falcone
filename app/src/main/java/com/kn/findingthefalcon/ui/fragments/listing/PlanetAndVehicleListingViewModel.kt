@@ -4,13 +4,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kn.commons.base.BaseViewModel
+import com.kn.commons.utils.annotation.Status
+import com.kn.domain.repository.LocalStorageRepository
+import com.kn.domain.usecase.FindFalconUseCase
 import com.kn.domain.usecase.GetPlanetsUseCase
+import com.kn.domain.usecase.GetTokenUseCase
 import com.kn.domain.usecase.GetVehiclesUseCase
+import com.kn.findingthefalcon.event.FindingFalconStatusEvent
 import com.kn.findingthefalcon.event.VehicleSelectionEvent
+import com.kn.model.body.FindFalconBody
+import com.kn.model.response.FindFalconResponse
 import com.kn.model.response.PlanetsEntity
 import com.kn.model.response.VehicleEntity
+import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
+import dagger.Lazy
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
@@ -23,17 +33,22 @@ Created on: 04/10/23
 class PlanetAndVehicleListingViewModel @Inject constructor(
     private val getPlanetsUseCase: GetPlanetsUseCase,
     private val getVehiclesUseCase: GetVehiclesUseCase,
+    private val getTokenUseCase: Lazy<GetTokenUseCase>,
+    private val findFalconUseCase: Lazy<FindFalconUseCase>,
+    private val localStorageRepository: Lazy<LocalStorageRepository>
 ) : BaseViewModel() {
 
     private val _planetData by lazy { MutableLiveData<List<PlanetsEntity>>() }
     val planetData: LiveData<List<PlanetsEntity>> by lazy { _planetData }
-
 
     private val _vehiclesData by lazy { MutableLiveData<List<VehicleEntity>>() }
     val vehiclesData: LiveData<List<VehicleEntity>> by lazy { _vehiclesData }
 
     private val _selectionEvent by lazy { MutableSharedFlow<VehicleSelectionEvent>() }
     val selectionEvent: SharedFlow<VehicleSelectionEvent> by lazy { _selectionEvent }
+
+    private val _findFalconEvent by lazy { MutableSharedFlow<FindingFalconStatusEvent>() }
+    val findFalconEvent: SharedFlow<FindingFalconStatusEvent> by lazy { _findFalconEvent }
 
     private val _selectionMap = HashMap<String, String>()
 
@@ -140,9 +155,43 @@ class PlanetAndVehicleListingViewModel @Inject constructor(
         return inUseVehiclesCount < vehicle.totalNumber
     }
 
-    fun getToken() {
+    fun findFalcon() {
         viewModelScope.launch {
+            val planets = _selectionMap.keys.toList()
+            val vehicles = _selectionMap.values.toList()
+            val storedToken = localStorageRepository.get().getToken()
+            if (storedToken.isNullOrBlank()) {
+                val tokenResponse = async { getTokenUseCase.get().invoke() }.await()
+                tokenResponse.onSuccess {
+                    localStorageRepository.get().setToken(this.data.token)
+                }
+                val requestBody =
+                    FindFalconBody(localStorageRepository.get().getToken(), planets, vehicles)
+                val findResponse = findFalconUseCase.get().invoke(requestBody)
+               handleFindResponse(findResponse)
+            } else {
+                val requestBody =
+                    FindFalconBody(localStorageRepository.get().getToken(), planets, vehicles)
+                val findResponse = findFalconUseCase.get().invoke(requestBody)
+                handleFindResponse(findResponse)
+            }
+        }
+    }
 
+    private fun handleFindResponse(findResponse: ApiResponse<FindFalconResponse>) {
+        findResponse.onSuccess {
+            val data =this.data
+            when (data.status) {
+                Status.SUCCESS -> {
+                    viewModelScope.launch{ _findFalconEvent.emit(FindingFalconStatusEvent.Found(data.planetName)) }
+                }
+                Status.FAILURE -> {
+                    viewModelScope.launch{ _findFalconEvent.emit(FindingFalconStatusEvent.NotFound) }
+                }
+                else -> {
+                    viewModelScope.launch{ _findFalconEvent.emit(FindingFalconStatusEvent.Error(data.error)) }
+                }
+            }
         }
     }
 }

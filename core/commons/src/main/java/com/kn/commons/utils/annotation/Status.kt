@@ -1,4 +1,4 @@
-package com.kn.commons.utils.constants.annotation
+package com.kn.commons.utils.annotation
 
 import androidx.annotation.StringDef
 
@@ -9,7 +9,7 @@ Created on: 09/10/23
  * if falcon is found then remote returns [SUCCESS]
  * otherwise [FAILURE].
  **/
-@StringDef(Status.SUCCESS,Status.FAILURE)
+@StringDef(Status.SUCCESS, Status.FAILURE)
 annotation class Status() {
     companion object {
         const val SUCCESS = "success"

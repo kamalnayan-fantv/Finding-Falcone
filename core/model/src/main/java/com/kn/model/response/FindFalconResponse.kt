@@ -2,7 +2,7 @@ package com.kn.model.response
 
 import com.google.gson.annotations.SerializedName
 import com.kn.commons.base.BaseResponse
-import com.kn.commons.utils.constants.annotation.Status
+import com.kn.commons.utils.annotation.Status
 
 /** @Author Kamal Nayan
 Created on: 09/10/23
