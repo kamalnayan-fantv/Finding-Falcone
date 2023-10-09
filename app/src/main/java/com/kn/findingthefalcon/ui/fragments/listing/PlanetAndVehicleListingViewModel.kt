@@ -1,4 +1,4 @@
-package com.kn.findingthefalcon
+package com.kn.findingthefalcon.ui.fragments.listing
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,7 +20,7 @@ import javax.inject.Inject
 Created on: 04/10/23
  **/
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class PlanetAndVehicleListingViewModel @Inject constructor(
     private val getPlanetsUseCase: GetPlanetsUseCase,
     private val getVehiclesUseCase: GetVehiclesUseCase,
 ) : BaseViewModel() {
@@ -32,10 +32,10 @@ class MainViewModel @Inject constructor(
     private val _vehiclesData by lazy { MutableLiveData<List<VehicleEntity>>() }
     val vehiclesData: LiveData<List<VehicleEntity>> by lazy { _vehiclesData }
 
-    private val _selectionEvent by lazy {  MutableSharedFlow<VehicleSelectionEvent>()}
-    val selectionEvent:SharedFlow<VehicleSelectionEvent> by lazy { _selectionEvent }
+    private val _selectionEvent by lazy { MutableSharedFlow<VehicleSelectionEvent>() }
+    val selectionEvent: SharedFlow<VehicleSelectionEvent> by lazy { _selectionEvent }
 
-    private val _selectionMap= HashMap<String,String>()
+    private val _selectionMap = HashMap<String, String>()
 
     /**
      * Fetches planets data from remote
@@ -74,7 +74,7 @@ class MainViewModel @Inject constructor(
                 * Means the selected vehicle card is again clicked hence
                 * we need to de-select it. so removing it from map.
                 */
-                if(_selectionMap[planet.name] == vehicle.name){
+                if (_selectionMap[planet.name] == vehicle.name) {
                     _selectionMap.remove(planet.name)
                     _selectionEvent.emit(VehicleSelectionEvent.VehicleSelected(_selectionMap))
                     return@launch
@@ -90,16 +90,17 @@ class MainViewModel @Inject constructor(
 
     /**
      * First check maximum number of planets are selected or not using [ifMaxPlanetSelected]
+     * then check if the [planet] is not in [_selectionMap]
      * if selected then show error otherwise assign [vehicle] to the [planet] by updating
      * [_selectionMap].
      */
     private fun selectVehicleForPlanet(vehicle: VehicleEntity, planet: PlanetsEntity) {
         /*
-         * Means vehicle for this planet was not selected earlier
-         * so we will first check if Max Planet Selected then return
+         * we will first check if Max Planet is already selected and the planet is not
+         * in selection map then return
          * otherwise select that vehicle for this planet
          */
-        if (ifMaxPlanetSelected()) {
+        if (ifMaxPlanetSelected() && isPlanetNotInSelectionMap(planet)) {
             viewModelScope.launch { _selectionEvent.emit(VehicleSelectionEvent.MaximumPlanetsSelected) }
             return
         }
@@ -113,6 +114,10 @@ class MainViewModel @Inject constructor(
                 )
             )
         }
+    }
+
+    private fun isPlanetNotInSelectionMap(planet: PlanetsEntity): Boolean {
+        return !_selectionMap.keys.contains(planet.name)
     }
 
     /**
@@ -131,11 +136,11 @@ class MainViewModel @Inject constructor(
      * hence, not available.
      */
     private fun isVehicleAvailable(vehicle: VehicleEntity): Boolean {
-        val inUseVehiclesCount = _selectionMap.values?.count { it == vehicle.name }?:return false
+        val inUseVehiclesCount = _selectionMap.values?.count { it == vehicle.name } ?: return false
         return inUseVehiclesCount < vehicle.totalNumber
     }
 
-    fun getToken(){
+    fun getToken() {
         viewModelScope.launch {
 
         }
