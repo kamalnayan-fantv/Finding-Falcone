@@ -2,6 +2,8 @@
 <resources>
     <color name="base_color_dark">#0C091B</color>
     <color name="base_color_light">#FDFDFD</color>
+    <color name="sub_item_color_light">#C0C0C0</color>
+    <color name="sub_item_color_dark">#191435</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

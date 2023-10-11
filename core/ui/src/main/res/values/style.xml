@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
+    <style name="Widget.AppTheme.Button.Rounded" parent="Widget.AppTheme.Button">
+        <item name="shapeAppearanceOverlay">@style/Rounded10sdpShapeAppearance</item>
+        <item name="layout_constraintWidth_percent">0.8</item>
+    </style>
 </resources>

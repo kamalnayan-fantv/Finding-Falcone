@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="base_color" format="color"/>
+    <attr name="sub_item_color" format="color"/>
     <attr name="text_title_color" format="color"/>
     <attr name="text_subtitle_color" format="color"/>
     <attr name="stroke_color" format="color"/>
+    <attr name="ripple_color" format="color"/>
 </resources>

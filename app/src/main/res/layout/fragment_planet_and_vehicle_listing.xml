@@ -31,11 +31,12 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/layout_epoxy_planet_item" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_find"
             android:layout_width="0dp"
+            android:text="Find Falcon"
             android:layout_height="wrap_content"
-            android:text="Find"
+            style="@style/Widget.AppTheme.Button.Rounded"
             app:layout_constraintVertical_bias="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

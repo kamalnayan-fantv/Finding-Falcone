@@ -8,6 +8,15 @@
     <fragment
         android:id="@+id/listingFragment"
         android:name="com.kn.findingthefalcon.ui.fragments.listing.PlanetAndVehicleListingFragment"
-        tools:layout="@layout/fragment_planet_and_vehicle_listing" />
+        tools:layout="@layout/fragment_planet_and_vehicle_listing" >
+        <action
+            android:id="@+id/action_listingFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/resultFragment"
+        tools:layout="@layout/fragment_result"
+        android:name="com.kn.findingthefalcon.ui.fragments.result.ResultFragment">
+    </fragment>
 </navigation>
