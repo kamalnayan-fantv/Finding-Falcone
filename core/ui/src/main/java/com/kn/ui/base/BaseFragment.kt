@@ -19,7 +19,7 @@ abstract class BaseFragment<VDB : ViewDataBinding>(
     private val bindingInflater: (LayoutInflater) -> VDB
 ) : Fragment() {
 
-
+    protected val TAG = this.javaClass.simpleName
     protected var binding by autoCleared<VDB>()
 
 
