@@ -12,6 +12,8 @@
         <item name="stroke_color">@color/md_grey_600</item>
         <item name="ripple_color">@color/md_grey_600</item>
         <item name="sub_item_color">@color/sub_item_color_light</item>
+        <item name="selected_item_color">#DFBFFA</item>
+        <item name="selected_child_item_color">@color/md_brown_300</item>
     </style>
 
     <style name="Base.Theme.FindingFalcon.Dark">
@@ -21,6 +23,8 @@
         <item name="stroke_color">@color/md_grey_500</item>
         <item name="ripple_color">@color/md_grey_600</item>
         <item name="sub_item_color">@color/sub_item_color_dark</item>
+        <item name="selected_item_color">#32104F</item>
+        <item name="selected_child_item_color">@color/md_brown_600</item>
     </style>
 
 </resources>

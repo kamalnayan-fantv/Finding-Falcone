@@ -12,6 +12,7 @@ import com.kn.ui.databinding.LayoutPlanetWithVehicleViewBinding
 import com.kn.ui.epoxy.controller.VehicleEpoxyController
 import com.kn.ui.filter.vehicle.DefaultVehicleFilter
 import com.kn.ui.filter.vehicle.EligibleVehicleFilter
+import kotlinx.coroutines.selects.select
 
 /** @Author Kamal Nayan
 Created on: 04/10/23
@@ -40,8 +41,20 @@ class PlanetWithVehicleView @JvmOverloads constructor(
             true
         )
         binding.shipsEpoxy.setController(vehicleEpoxyController)
+        setupBackground()
         setListeners()
-        // LayoutPlanetWithShipViewBinding.inflate(LayoutInflater.from(context), this, true)
+    }
+
+    private fun setupBackground() {
+        val backgroundRes = if(selectedVehicle==null)R.drawable.bg_round_stroke else R.drawable.bg_round_selected_dark
+        val elevation =
+            if (selectedVehicle == null) context.resources.getDimension(com.intuit.sdp.R.dimen._2sdp) else context.resources.getDimension(
+                com.intuit.sdp.R.dimen._4sdp
+            )
+        binding.parentContainer.apply {
+            setBackgroundResource(backgroundRes)
+            this.elevation=elevation
+        }
     }
 
     private fun setListeners() {
@@ -82,6 +95,7 @@ class PlanetWithVehicleView @JvmOverloads constructor(
     fun setSelectedVehicle(vehicle:VehicleEntity?){
         selectedVehicle=vehicle
         buildVehiclesView()
+        setupBackground()
     }
 
     fun setVehicleClickListener( onVehicleClick:((VehicleEntity)->Unit)){

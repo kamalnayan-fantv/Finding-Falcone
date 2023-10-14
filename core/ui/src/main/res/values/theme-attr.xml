@@ -6,4 +6,6 @@
     <attr name="text_subtitle_color" format="color"/>
     <attr name="stroke_color" format="color"/>
     <attr name="ripple_color" format="color"/>
+    <attr name="selected_item_color" format="color"/>
+    <attr name="selected_child_item_color" format="color"/>
 </resources>
