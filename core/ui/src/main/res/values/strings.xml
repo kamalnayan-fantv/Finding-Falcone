@@ -3,4 +3,7 @@
     <string name="format_vehicle_speed">%s MM/hour</string>
     <string name="format_vehicle_not_available">All %s are already being used.</string>
     <string name="error_max_planets_selected">Maximum number of planets have been selected.</string>
+    <string name="error_required_no_of_planets_not_selected">%s planets needs to be selected to perform search.</string>
+    <string name="format_found_on">!!WOO-HOO!! \n Found on %s</string>
+    <string name="not_found">AHH..... \n Not Found </string>
 </resources>

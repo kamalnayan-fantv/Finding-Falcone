@@ -1,15 +1,18 @@
 package com.kn.findingthefalcon.ui.fragments.listing
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kn.commons.base.BaseViewModel
 import com.kn.commons.utils.annotation.Status
+import com.kn.commons.utils.constants.Constants.REQUIRED_SELECTED_PLANETS_COUNT
 import com.kn.domain.repository.LocalStorageRepository
 import com.kn.domain.usecase.FindFalconUseCase
 import com.kn.domain.usecase.GetPlanetsUseCase
 import com.kn.domain.usecase.GetTokenUseCase
 import com.kn.domain.usecase.GetVehiclesUseCase
+import com.kn.ui.R
 import com.kn.findingthefalcon.event.FindingFalconStatusEvent
 import com.kn.findingthefalcon.event.VehicleSelectionEvent
 import com.kn.model.body.FindFalconBody
@@ -21,8 +24,10 @@ import com.skydoves.sandwich.onSuccess
 import dagger.Lazy
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -45,10 +50,10 @@ class PlanetAndVehicleListingViewModel @Inject constructor(
     val vehiclesData: LiveData<List<VehicleEntity>> by lazy { _vehiclesData }
 
     private val _selectionEvent by lazy { MutableSharedFlow<VehicleSelectionEvent>() }
-    val selectionEvent: SharedFlow<VehicleSelectionEvent> by lazy { _selectionEvent }
+    val selectionEvent by lazy { _selectionEvent.asSharedFlow() }
 
     private val _findFalconEvent by lazy { MutableSharedFlow<FindingFalconStatusEvent>() }
-    val findFalconEvent: SharedFlow<FindingFalconStatusEvent> by lazy { _findFalconEvent }
+    val findFalconEvent by lazy { _findFalconEvent.asSharedFlow()}
 
     private val _selectionMap = HashMap<String, String>()
 
@@ -141,7 +146,7 @@ class PlanetAndVehicleListingViewModel @Inject constructor(
      * else just return false
      */
     private fun ifMaxPlanetSelected(): Boolean {
-        return _selectionMap.keys.count() >= 4
+        return _selectionMap.keys.count() >= REQUIRED_SELECTED_PLANETS_COUNT
     }
 
 
@@ -160,6 +165,19 @@ class PlanetAndVehicleListingViewModel @Inject constructor(
             val planets = _selectionMap.keys.toList()
             val vehicles = _selectionMap.values.toList()
             val storedToken = localStorageRepository.get().getToken()
+
+            if (planets.size < REQUIRED_SELECTED_PLANETS_COUNT) {
+                viewModelScope.launch {
+                    _findFalconEvent.emit(
+                        FindingFalconStatusEvent.InvalidRequest(
+                            R.string.error_required_no_of_planets_not_selected,
+                            listOf(REQUIRED_SELECTED_PLANETS_COUNT)
+                        )
+                    )
+                }
+                return@launch
+            }
+
             if (storedToken.isNullOrBlank()) {
                 val tokenResponse = async { getTokenUseCase.get().invoke() }.await()
                 tokenResponse.onSuccess {
@@ -181,6 +199,7 @@ class PlanetAndVehicleListingViewModel @Inject constructor(
     private fun handleFindResponse(findResponse: ApiResponse<FindFalconResponse>) {
         findResponse.onSuccess {
             val data =this.data
+
             when (data.status) {
                 Status.SUCCESS -> {
                     viewModelScope.launch{ _findFalconEvent.emit(FindingFalconStatusEvent.Found(data.planetName)) }

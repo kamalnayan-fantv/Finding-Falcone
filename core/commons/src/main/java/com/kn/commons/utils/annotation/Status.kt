@@ -1,6 +1,8 @@
 package com.kn.commons.utils.annotation
 
 import androidx.annotation.StringDef
+import com.kn.commons.utils.annotation.Status.Companion.FAILURE
+import com.kn.commons.utils.annotation.Status.Companion.SUCCESS
 
 /** @Author Kamal Nayan
 Created on: 09/10/23
@@ -13,6 +15,6 @@ Created on: 09/10/23
 annotation class Status() {
     companion object {
         const val SUCCESS = "success"
-        const val FAILURE="false"
+        const val FAILURE = "false"
     }
 }

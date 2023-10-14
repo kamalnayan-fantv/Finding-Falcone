@@ -76,8 +76,11 @@ abstract class BaseFragment<VDB : ViewDataBinding>(
         }
     }
 
-    protected fun Int.toStringFromResourceId(): String =
-        context?.resources?.getString(this) ?: ""
+    protected fun Int.toStringFromResourceId(vararg  formatArgs:Any): String =
+        if (formatArgs.isNullOrEmpty())
+            context?.resources?.getString(this) ?: ""
+        else
+            context?.resources?.getString(this, *formatArgs) ?: ""
 
     protected fun Int.toColor() = ContextCompat.getColor(requireContext(), this)
 }

@@ -18,5 +18,14 @@
         android:id="@+id/resultFragment"
         tools:layout="@layout/fragment_result"
         android:name="com.kn.findingthefalcon.ui.fragments.result.ResultFragment">
+        <argument
+            android:name="status"
+            app:argType="string"
+            app:nullable="false"
+            />
+        <argument
+            android:name="planetName"
+            app:argType="string"
+            app:nullable="true"/>
     </fragment>
 </navigation>

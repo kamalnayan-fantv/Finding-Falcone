@@ -2,13 +2,19 @@ package com.kn.findingthefalcon.ui.fragments.listing
 
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.kn.commons.utils.annotation.Status
 import com.kn.commons.utils.extensions.setSafeClickListener
+import com.kn.commons.utils.extensions.showToast
 import com.kn.findingthefalcon.databinding.FragmentPlanetAndVehicleListingBinding
 import com.kn.findingthefalcon.epoxy.controller.PlanetEpoxyController
 import com.kn.findingthefalcon.event.FindingFalconStatusEvent
 import com.kn.findingthefalcon.event.VehicleSelectionEvent
+import com.kn.findingthefalcon.ui.fragments.result.ResultFragmentArgs
 import com.kn.ui.R
 import com.kn.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -74,28 +80,65 @@ class PlanetAndVehicleListingFragment : BaseFragment<FragmentPlanetAndVehicleLis
             }
 
             lifecycleScope.launch {
-                selectionEvent.flowWithLifecycle(lifecycle).collectLatest {event->
-                    handleSelectionEvent(event)
-                }
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                    launch {
+                        findFalconEvent.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                            .collectLatest { event ->
+                                handleFindFalconResultEvent(event)
+                            }
+                    }
 
-                findFalconEvent.flowWithLifecycle(lifecycle).collectLatest {event->
-                    handleFindFalconResultEvent(event)
+                    launch {
+                        selectionEvent.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                            .collectLatest { event ->
+                                handleSelectionEvent(event)
+                            }
+                    }
                 }
             }
         }
     }
 
     private fun handleFindFalconResultEvent(event: FindingFalconStatusEvent) {
-        when(event){
+        when (event) {
             is FindingFalconStatusEvent.Error -> {
-                Toast.makeText(requireContext(),event.toString(),Toast.LENGTH_LONG).show()
+                requireContext().showToast(event.toString(), Toast.LENGTH_LONG)
             }
+
             is FindingFalconStatusEvent.Found -> {
-                Toast.makeText(requireContext(),event.toString(),Toast.LENGTH_LONG).show()
+                findNavController().navigate(
+                    PlanetAndVehicleListingFragmentDirections.actionListingFragmentToResultFragment(
+                        Status.SUCCESS,
+                        event.planetName
+                    )
+                )
             }
+
             FindingFalconStatusEvent.NotFound -> {
-                Toast.makeText(requireContext(),event.toString(),Toast.LENGTH_LONG).show()
+                findNavController().navigate(
+                    PlanetAndVehicleListingFragmentDirections.actionListingFragmentToResultFragment(
+                        Status.FAILURE,
+                        null
+                    )
+                )
             }
+
+            is FindingFalconStatusEvent.InvalidRequest -> {
+               handleInvalidRequestEvent(event)
+            }
+        }
+    }
+
+    /**
+     * If event has arguments for string then will show with args otherwise
+     * will show the resource string
+     */
+    private fun handleInvalidRequestEvent(event: FindingFalconStatusEvent.InvalidRequest) {
+        if (event.formatArgs.isNullOrEmpty())
+            requireContext().showToast(event.message.toStringFromResourceId())
+        else {
+            val formatArgs = event.formatArgs.toTypedArray()
+            requireContext().showToast(event.message.toStringFromResourceId(*formatArgs))
         }
     }
 
@@ -107,7 +150,7 @@ class PlanetAndVehicleListingFragment : BaseFragment<FragmentPlanetAndVehicleLis
             }
 
             is VehicleSelectionEvent.VehicleNotAvailable ->{
-                Toast.makeText(requireContext(),getString(R.string.format_vehicle_not_available,event.vehicleName),
+                Toast.makeText(requireContext(),R.string.format_vehicle_not_available.toStringFromResourceId(event.vehicleName),
                     Toast.LENGTH_LONG).show()
             }
 

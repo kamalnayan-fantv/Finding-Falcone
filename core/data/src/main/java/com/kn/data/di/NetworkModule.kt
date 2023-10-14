@@ -2,6 +2,7 @@ package com.kn.data.di
 
 import com.kn.data.BuildConfig
 import com.kn.data.api.FalconService
+import com.kn.data.interceptor.HeaderInterceptor
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -29,17 +30,22 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun createOkHttpClient(): OkHttpClient {
+    fun createOkHttpClient(headerInterceptor: HeaderInterceptor): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
         val clientBuilder = OkHttpClient.Builder()
         if (BuildConfig.DEBUG) {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
             clientBuilder.addInterceptor(httpLoggingInterceptor)
         }
+        clientBuilder.apply {
+            addInterceptor(headerInterceptor)
+        }
         return clientBuilder.build()
     }
 
-
+    /**
+     * Used to create service instance
+     */
     private inline fun <reified T> createWebService(
         okHttpClient: OkHttpClient,
         url: String = BuildConfig.BASE_URL

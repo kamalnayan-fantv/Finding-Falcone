@@ -8,6 +8,7 @@ import com.kn.model.response.VehicleEntity
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 /** @Author Kamal Nayan

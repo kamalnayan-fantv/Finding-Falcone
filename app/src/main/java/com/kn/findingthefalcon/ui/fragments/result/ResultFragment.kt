@@ -5,33 +5,42 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
+import com.kn.commons.utils.annotation.Status
 import com.kn.findingthefalcon.R
+import com.kn.findingthefalcon.databinding.FragmentResultBinding
+import com.kn.ui.base.BaseFragment
 
 
-class ResultFragment : Fragment() {
+class ResultFragment : BaseFragment<FragmentResultBinding>(FragmentResultBinding::inflate) {
     private var result: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_result, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ResultFragment.
-         */
+    private val args by navArgs<ResultFragmentArgs>()
+    override fun setViewModelToBinding() {
 
     }
+
+    override fun initViews() {
+        with(binding){
+            when(args.status){
+                Status.FAILURE->{
+                    tvStatus.text= com.kn.ui.R.string.not_found.toStringFromResourceId()
+                    lottie.setAnimation(R.raw.not_found)
+                }
+                Status.SUCCESS->{
+                    tvStatus.text= com.kn.ui.R.string.format_found_on.toStringFromResourceId(args.planetName.orEmpty())
+                    lottie.setAnimation(R.raw.found)
+                }
+            }
+        }
+    }
+
+    override fun setData() {
+    }
+
+    override fun setListeners() {
+    }
+
+    override fun setObservers() {
+    }
+
 }

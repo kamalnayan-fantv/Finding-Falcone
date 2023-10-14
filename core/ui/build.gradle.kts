@@ -60,4 +60,5 @@ dependencies {
     implementation("com.airbnb.android:epoxy-databinding:$epoxyVersion")
     kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
 
+    api ("com.airbnb.android:lottie:5.2.0")
 }
