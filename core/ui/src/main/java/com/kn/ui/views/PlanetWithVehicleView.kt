@@ -47,13 +47,8 @@ class PlanetWithVehicleView @JvmOverloads constructor(
 
     private fun setupBackground() {
         val backgroundRes = if(selectedVehicle==null)R.drawable.bg_round_stroke else R.drawable.bg_round_selected_dark
-        val elevation =
-            if (selectedVehicle == null) context.resources.getDimension(com.intuit.sdp.R.dimen._2sdp) else context.resources.getDimension(
-                com.intuit.sdp.R.dimen._4sdp
-            )
         binding.parentContainer.apply {
             setBackgroundResource(backgroundRes)
-            this.elevation=elevation
         }
     }
 
