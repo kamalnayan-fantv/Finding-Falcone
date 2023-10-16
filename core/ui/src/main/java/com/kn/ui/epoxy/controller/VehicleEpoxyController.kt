@@ -28,6 +28,9 @@ class VehicleEpoxyController : AsyncEpoxyController() {
         buildVehiclesView()
     }
 
+    /**
+     * Will show shimmer till data is arrived
+     */
     private fun buildVehiclesView() {
         vehicleList?.forEachIndexed { index, vehicleEntity ->
             vehicle {

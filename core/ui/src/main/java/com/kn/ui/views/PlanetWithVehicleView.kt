@@ -82,6 +82,11 @@ class PlanetWithVehicleView @JvmOverloads constructor(
         buildVehiclesView()
     }
 
+    /**
+     * Used to set filter which decides which vehicles are eleigible for
+     * this planet.
+     * Currently we are using [DefaultVehicleFilter] by default.
+     */
     fun setEligibilityFilter(filter: EligibleVehicleFilter) {
         this.filter = filter
         buildVehiclesView()
@@ -107,7 +112,7 @@ class PlanetWithVehicleView @JvmOverloads constructor(
     }
 
     /**
-     * Returns time taken by selected vehicle to this planet.
+     * Returns time taken by selected vehicle to reach this planet.
      */
     fun getTimeTaken():Int {
         val vehicleSpeed = selectedVehicle?.speed ?: return 0
