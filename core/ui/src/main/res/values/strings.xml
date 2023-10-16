@@ -6,4 +6,9 @@
     <string name="error_required_no_of_planets_not_selected">%s planets needs to be selected to perform search.</string>
     <string name="format_found_on">!!WOO-HOO!! \n Found on %s</string>
     <string name="not_found">AHH..... \n Not Found </string>
+    <string name="text_total_count">Total count</string>
+    <string name="text_speed">Speed</string>
+    <string name="format_hours_to_reach_planet">%s hours to reach %s</string>
+    <string name="format_planet_distance">%s Mega-miles</string>
+    <string name="format_total_time_taken">Total Time Taken : %s Hrs.</string>
 </resources>

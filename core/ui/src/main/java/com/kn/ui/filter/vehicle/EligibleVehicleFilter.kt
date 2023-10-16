@@ -6,5 +6,5 @@ import com.kn.model.response.VehicleEntity
 Created on: 04/10/23
  **/
 interface EligibleVehicleFilter {
-    fun getEligibleVehicles(planetDistance: Int, vehicles: List<VehicleEntity>):List<VehicleEntity>
+    fun getEligibleVehicles(planetDistance: Int, vehicles: List<VehicleEntity>?):List<VehicleEntity>?
 }

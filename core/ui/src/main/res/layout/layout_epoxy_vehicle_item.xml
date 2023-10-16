@@ -23,7 +23,8 @@
             android:id="@+id/tv_vehicle_name"
             app:layout_constraintHorizontal_bias="0"
             tools:text="Spaceship"
-            style="@style/TextAppearance.AppTheme.Title"
+            android:textColor="?text_title_color"
+            style="@style/TextAppearance.AppTheme.Planet.SubTitle"
             app:layout_constraintBottom_toTopOf="@id/tv_speed"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,13 +33,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_speed"
+            android:layout_marginTop="@dimen/_7sdp"
             tools:text="200"
+            android:textColor="?text_title_color"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_count"
             app:layout_constraintTop_toBottomOf="@id/tv_vehicle_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            style="@style/TextAppearance.AppTheme.Planet.SubTitle"
+            style="@style/TextAppearance.AppTheme.Body2"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_count"
+            android:textColor="?text_subtitle_color"
+            tools:text="3"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_speed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/TextAppearance.AppTheme.Body2"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

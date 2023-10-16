@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/parent_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_shimmer_round_rectangle"
+            android:clickable="true"
+            android:focusable="true"
+            android:minWidth="@dimen/_150sdp"
+            android:padding="@dimen/_13sdp">
+
+            <View
+                android:id="@+id/tv_vehicle_name"
+                style="@style/TextAppearance.AppTheme.Planet.SubTitle"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:textColor="?text_title_color"
+                app:layout_constraintBottom_toTopOf="@id/tv_speed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Spaceship" />
+
+            <View
+                android:id="@+id/tv_speed"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:textColor="?text_title_color"
+                app:layout_constraintBottom_toTopOf="@id/tv_count"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_vehicle_name"
+                tools:text="200" />
+
+            <View
+                android:id="@+id/tv_count"
+                style="@style/TextAppearance.AppTheme.Body2"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:textColor="?text_subtitle_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_speed"
+                tools:text="3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+</layout>

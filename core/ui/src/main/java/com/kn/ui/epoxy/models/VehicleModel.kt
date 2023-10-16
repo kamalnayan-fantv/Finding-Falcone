@@ -1,5 +1,8 @@
 package com.kn.ui.epoxy.models
 
+import android.text.SpannableStringBuilder
+import android.widget.TextView
+import androidx.core.text.bold
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.kn.commons.utils.extensions.setSafeClickListener
@@ -39,12 +42,44 @@ abstract class VehicleModel : BaseEpoxyModel<LayoutEpoxyVehicleItemBinding>(R.la
     private fun setupUi(binding: LayoutEpoxyVehicleItemBinding) {
         with(binding){
             tvVehicleName.text = vehicleItem?.name
-            tvSpeed.text = binding.root.context.getString(R.string.format_vehicle_speed,vehicleItem?.speed.toString())
+           setSpeed(this)
+            setTotalCountText(this)
             if(showAsSelected){
                 binding.parentContainer.setBackgroundResource(R.drawable.bg_round_selected)
             }else{
                 binding.parentContainer.setBackgroundResource(R.drawable.bg_round_unselected)
             }
+        }
+    }
+
+    private fun setSpeed(binding: LayoutEpoxyVehicleItemBinding) {
+        with(binding) {
+            val speedText = SpannableStringBuilder().apply {
+                bold {
+                    append(binding.root.context.getString(R.string.text_speed))
+                }
+                append(" : ")
+                append(
+                    binding.root.context.getString(
+                        R.string.format_vehicle_speed,
+                        vehicleItem?.speed.toString()
+                    )
+                )
+            }
+            tvSpeed.setText(speedText, TextView.BufferType.SPANNABLE)
+        }
+    }
+
+    private fun setTotalCountText(binding: LayoutEpoxyVehicleItemBinding) {
+        with(binding) {
+            val spannableString = SpannableStringBuilder().apply {
+                bold {
+                    append(binding.root.context.getString(R.string.text_total_count))
+                }
+                append(" : ")
+                append(vehicleItem?.totalNumber.toString() ?: 0.toString())
+            }
+            tvCount.setText(spannableString, TextView.BufferType.SPANNABLE)
         }
     }
 }

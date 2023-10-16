@@ -1,6 +1,7 @@
 package com.kn.findingthefalcon.ui.fragments.listing
 
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -14,7 +15,6 @@ import com.kn.findingthefalcon.databinding.FragmentPlanetAndVehicleListingBindin
 import com.kn.findingthefalcon.epoxy.controller.PlanetEpoxyController
 import com.kn.findingthefalcon.event.FindingFalconStatusEvent
 import com.kn.findingthefalcon.event.VehicleSelectionEvent
-import com.kn.findingthefalcon.ui.fragments.result.ResultFragmentArgs
 import com.kn.ui.R
 import com.kn.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,9 +39,9 @@ class PlanetAndVehicleListingFragment : BaseFragment<FragmentPlanetAndVehicleLis
     }
 
     override fun initViews() {
-        with(binding){
-                    planetsEpoxy.setController(controller)
-            }
+        with(binding) {
+            planetsEpoxy.setController(controller)
+        }
     }
 
     override fun setData() {
@@ -146,7 +146,7 @@ class PlanetAndVehicleListingFragment : BaseFragment<FragmentPlanetAndVehicleLis
     private fun handleSelectionEvent(event: VehicleSelectionEvent) {
         when(event){
             is VehicleSelectionEvent.VehicleSelected ->{
-                controller.selectionMap=event.data
+             onVehicleSelected(event)
             }
 
             is VehicleSelectionEvent.VehicleNotAvailable ->{
@@ -156,6 +156,18 @@ class PlanetAndVehicleListingFragment : BaseFragment<FragmentPlanetAndVehicleLis
 
             VehicleSelectionEvent.MaximumPlanetsSelected ->   Toast.makeText(requireContext(),R.string.error_max_planets_selected.toStringFromResourceId(),
                 Toast.LENGTH_LONG).show()
+        }
+    }
+
+    /**
+     * After a vehicle is selected then update the ui
+     * accordingly
+     */
+    private fun onVehicleSelected(event: VehicleSelectionEvent.VehicleSelected) {
+        controller.selectionMap=event.data
+        binding.tvTotalTime.apply {
+            text = R.string.format_total_time_taken.toStringFromResourceId(event.totalTimeTaken.toString())
+            isVisible = event.totalTimeTaken> 0
         }
     }
 }

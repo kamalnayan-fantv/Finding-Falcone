@@ -1,6 +1,5 @@
 package com.kn.findingthefalcon.ui.fragments.listing
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,23 +11,24 @@ import com.kn.domain.usecase.FindFalconUseCase
 import com.kn.domain.usecase.GetPlanetsUseCase
 import com.kn.domain.usecase.GetTokenUseCase
 import com.kn.domain.usecase.GetVehiclesUseCase
-import com.kn.ui.R
 import com.kn.findingthefalcon.event.FindingFalconStatusEvent
 import com.kn.findingthefalcon.event.VehicleSelectionEvent
 import com.kn.model.body.FindFalconBody
 import com.kn.model.response.FindFalconResponse
 import com.kn.model.response.PlanetsEntity
 import com.kn.model.response.VehicleEntity
+import com.kn.ui.R
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
 import dagger.Lazy
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /** @Author Kamal Nayan
@@ -71,9 +71,12 @@ class PlanetAndVehicleListingViewModel @Inject constructor(
 
     /**
      * Fetches vehicles data from remote
+     *
+     * delay is to show shimmer effect
      */
     fun getVehicles() {
         viewModelScope.launch {
+            delay(1500)
             val response = getVehiclesUseCase.invoke()
             response.onSuccess {
                 _vehiclesData.postValue(this.data)
@@ -96,7 +99,8 @@ class PlanetAndVehicleListingViewModel @Inject constructor(
                 */
                 if (_selectionMap[planet.name] == vehicle.name) {
                     _selectionMap.remove(planet.name)
-                    _selectionEvent.emit(VehicleSelectionEvent.VehicleSelected(_selectionMap))
+                    val totalTimeTaken = getTotalTime()
+                    _selectionEvent.emit(VehicleSelectionEvent.VehicleSelected(_selectionMap,totalTimeTaken))
                     return@launch
                 }
             }
@@ -126,13 +130,45 @@ class PlanetAndVehicleListingViewModel @Inject constructor(
         }
         _selectionMap[planet.name] = vehicle.name
 
-
         viewModelScope.launch {
+            val totalTimeTaken = getTotalTime()
+
             _selectionEvent.emit(
                 VehicleSelectionEvent.VehicleSelected(
-                    _selectionMap
+                    _selectionMap,
+                    totalTimeTaken
                 )
             )
+        }
+    }
+
+    private suspend fun getTotalTime(): Int {
+       return withContext(Dispatchers.Default) {
+            var totalTime = 0
+
+            _selectionMap.forEach { entry ->
+                _planetData.value?.forEach { planet ->
+                    if (planet.name == entry.key) {
+                        /* means a vehicle is selected for this planet
+                        * so we will find that vehicle
+                        */
+                        _vehiclesData.value?.forEach { vehicle ->
+                            if (vehicle.name == entry.value) {
+                                /**
+                                 * Vehicle for this planet has been found so now we
+                                 * will calculate time.
+                                 */
+                                /**
+                                 * Vehicle for this planet has been found so now we
+                                 * will calculate time.
+                                 */
+                                totalTime += planet.distance / vehicle.speed
+                            }
+                        }
+                    }
+                }
+            }
+           return@withContext totalTime
         }
     }
 

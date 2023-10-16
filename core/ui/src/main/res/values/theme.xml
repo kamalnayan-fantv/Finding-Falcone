@@ -12,8 +12,10 @@
         <item name="stroke_color">@color/md_grey_600</item>
         <item name="ripple_color">@color/md_grey_600</item>
         <item name="sub_item_color">@color/sub_item_color_light</item>
-        <item name="selected_item_color">#DFBFFA</item>
-        <item name="selected_child_item_color">@color/md_brown_300</item>
+        <item name="selected_item_color">@color/md_green_50</item>
+        <item name="selected_child_item_color">@color/md_green_400</item>
+        <item name="message_bg_color">@color/md_blue_200</item>
+        <item name="shimmer_color">@color/md_grey_400</item>
     </style>
 
     <style name="Base.Theme.FindingFalcon.Dark">
@@ -23,8 +25,10 @@
         <item name="stroke_color">@color/md_grey_500</item>
         <item name="ripple_color">@color/md_grey_600</item>
         <item name="sub_item_color">@color/sub_item_color_dark</item>
-        <item name="selected_item_color">#32104F</item>
-        <item name="selected_child_item_color">@color/md_brown_600</item>
+        <item name="selected_item_color">@color/sub_item_color_dark</item>
+        <item name="selected_child_item_color">@color/md_dark_blue_black_700</item>
+        <item name="message_bg_color">@color/md_blue_magenta_500</item>
+        <item name="shimmer_color">@color/md_grey_500</item>
     </style>
 
 </resources>

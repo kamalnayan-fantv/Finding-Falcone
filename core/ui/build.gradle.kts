@@ -61,4 +61,5 @@ dependencies {
     kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
 
     api ("com.airbnb.android:lottie:5.2.0")
+    api ("com.facebook.shimmer:shimmer:0.5.0")
 }

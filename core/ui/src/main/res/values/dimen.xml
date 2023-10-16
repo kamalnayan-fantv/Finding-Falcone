@@ -3,4 +3,5 @@
     <dimen name="text_size_title">@dimen/_18ssp</dimen>
     <dimen name="text_size_subtitle">@dimen/_12ssp</dimen>
     <dimen name="horizontal_margin">@dimen/_12ssp</dimen>
+    <dimen name="corner_radius">@dimen/_8sdp</dimen>
 </resources>

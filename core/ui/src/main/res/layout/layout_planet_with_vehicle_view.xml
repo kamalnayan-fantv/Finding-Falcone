@@ -8,56 +8,118 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
         android:id="@+id/parent_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_round_stroke"
+        android:animateLayoutChanges="true"
         android:elevation="@dimen/_2sdp">
+
+        <TextView
+            android:id="@+id/tv_planet_name_title"
+            style="@style/TextAppearance.AppTheme.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:textColor="?text_title_color"
+            app:layout_constraintWidth_percent="0.3"
+            android:text="Planet :"
+            app:layout_constraintBottom_toTopOf="@id/tv_distance"
+            app:layout_constraintEnd_toStartOf="@id/tv_planet_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_planet_name"
             style="@style/TextAppearance.AppTheme.Title.Bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="@dimen/_12sdp"
+            android:gravity="start"
+            android:padding="@dimen/_6sdp"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toTopOf="@id/tv_distance"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_planet_name_title"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="Saturn" />
 
+
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_distance_title"
+            style="@style/TextAppearance.AppTheme.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintWidth_percent="0.3"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:text="Distance :"
+            android:textColor="?text_title_color"
+            app:layout_constraintBottom_toTopOf="@id/divider"
+            app:layout_constraintEnd_toStartOf="@id/tv_distance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_planet_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_distance"
-            tools:text="300"
-            style="@style/TextAppearance.AppTheme.Planet.SubTitle"
-            android:gravity="center"
-            app:layout_constraintBottom_toTopOf="@id/ships_epoxy"
-            app:layout_constraintTop_toBottomOf="@id/tv_planet_name"
+            style="@style/TextAppearance.AppTheme.Subtitle1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/_6sdp"
+            android:textColor="?text_title_color"
+            app:layout_constraintBottom_toBottomOf="@id/tv_distance_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_distance_title"
+            app:layout_constraintTop_toTopOf="@id/tv_distance_title"
+            tools:text="300" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="?stroke_color"
+            tools:background="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/tv_time_to_reach"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_distance_title" />
 
-            />
+        <androidx.appcompat.widget.AppCompatTextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/divider"
+            app:layout_constraintBottom_toTopOf="@id/ships_epoxy"
+            tools:text="@string/format_hours_to_reach_planet"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_8sdp"
+            style="@style/TextAppearance.AppTheme.Body2"
+            tools:visibility="visible"
+            android:textColor="?text_subtitle_color"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:padding="@dimen/_6sdp"
+            android:id="@+id/tv_time_to_reach"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
 
         <com.airbnb.epoxy.EpoxyRecyclerView
             android:id="@+id/ships_epoxy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/_12sdp"
             android:layout_marginHorizontal="@dimen/_4sdp"
-            tools:listitem="@layout/layout_epoxy_vehicle_item"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:paddingVertical="@dimen/_6sdp"
             app:itemSpacing="@dimen/_8sdp"
-            app:layout_constraintTop_toBottomOf="@id/tv_distance"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_time_to_reach"
+            tools:listitem="@layout/layout_epoxy_vehicle_item"
 
             />
     </androidx.constraintlayout.widget.ConstraintLayout>

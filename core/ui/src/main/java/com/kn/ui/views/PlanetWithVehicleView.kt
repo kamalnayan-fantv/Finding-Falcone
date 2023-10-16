@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.kn.model.response.PlanetsEntity
 import com.kn.model.response.VehicleEntity
@@ -12,7 +13,6 @@ import com.kn.ui.databinding.LayoutPlanetWithVehicleViewBinding
 import com.kn.ui.epoxy.controller.VehicleEpoxyController
 import com.kn.ui.filter.vehicle.DefaultVehicleFilter
 import com.kn.ui.filter.vehicle.EligibleVehicleFilter
-import kotlinx.coroutines.selects.select
 
 /** @Author Kamal Nayan
 Created on: 04/10/23
@@ -91,6 +91,28 @@ class PlanetWithVehicleView @JvmOverloads constructor(
         selectedVehicle=vehicle
         buildVehiclesView()
         setupBackground()
+        setupTimeTaken(vehicle)
+    }
+
+    private fun setupTimeTaken(vehicle: VehicleEntity?) {
+        if(vehicle==null){
+            binding.tvTimeToReach.isVisible =false
+            return
+        }
+        val timeTakenToReachPlanet = getTimeTaken()
+        binding.tvTimeToReach.apply {
+            isVisible = true
+            text= context.getString(R.string.format_hours_to_reach_planet,timeTakenToReachPlanet.toString(),planetItem?.name.orEmpty())
+        }
+    }
+
+    /**
+     * Returns time taken by selected vehicle to this planet.
+     */
+    fun getTimeTaken():Int {
+        val vehicleSpeed = selectedVehicle?.speed ?: return 0
+        val time =((planetItem?.distance ?: 0).div(vehicleSpeed))
+        return time
     }
 
     fun setVehicleClickListener( onVehicleClick:((VehicleEntity)->Unit)){
@@ -102,7 +124,7 @@ class PlanetWithVehicleView @JvmOverloads constructor(
             vehicleEpoxyController.apply {
                 vehicleList = filter.getEligibleVehicles(
                     planetDistance = planetItem?.distance ?: 0,
-                    vehicles ?: emptyList()
+                    vehicles
                 )
 
                 selectedVehicle = this@PlanetWithVehicleView.selectedVehicle

@@ -12,9 +12,9 @@ Created on: 04/10/23
 class DefaultVehicleFilter : EligibleVehicleFilter {
     override fun getEligibleVehicles(
         planetDistance: Int,
-        vehicles: List<VehicleEntity>
-    ): List<VehicleEntity> {
-        return vehicles.filter { it.maxDistance >= planetDistance }
+        vehicles: List<VehicleEntity>?
+    ): List<VehicleEntity>? {
+        return vehicles?.filter { it.maxDistance >= planetDistance }?:null
     }
 
 }

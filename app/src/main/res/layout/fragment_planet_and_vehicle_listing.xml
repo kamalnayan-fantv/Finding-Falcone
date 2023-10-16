@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,38 +10,58 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:background="?base_color"
         tools:context=".ui.fragments.listing.PlanetAndVehicleListingFragment">
+
+        <TextView
+            android:id="@+id/tv_total_time"
+            style="@style/TextAppearance.AppTheme.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?message_bg_color"
+            app:layout_constraintBottom_toTopOf="@id/planets_epoxy"
+            android:gravity="center"
+            android:padding="@dimen/_12sdp"
+            android:textColor="?text_title_color"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="200 hours"
+            tools:visibility="visible" />
 
         <com.airbnb.epoxy.EpoxyRecyclerView
             android:id="@+id/planets_epoxy"
             android:layout_width="0dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_find"
             android:layout_height="0dp"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintVertical_bias="0"
-            android:paddingBottom="@dimen/_8sdp"
             android:clipToPadding="false"
-            android:paddingHorizontal="@dimen/_8sdp"
-            app:itemSpacing="@dimen/_8sdp"
             android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            app:itemSpacing="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/btn_find"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_time"
             tools:listitem="@layout/layout_epoxy_planet_item" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_find"
-            android:layout_width="0dp"
-            android:text="Find Falcon"
-            android:layout_height="wrap_content"
             style="@style/Widget.AppTheme.Button.Rounded"
-            app:layout_constraintVertical_bias="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Find Falcon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/planets_epoxy" />
+            app:layout_constraintTop_toBottomOf="@id/planets_epoxy"
+            app:layout_constraintVertical_bias="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
