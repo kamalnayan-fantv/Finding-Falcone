@@ -14,6 +14,13 @@ import com.kn.model.response.VehicleEntity
 Created on: 05/10/23
  **/
 class PlanetEpoxyController : AsyncEpoxyController() {
+    /**
+     * In order to show shimmer we are requesting model
+     * build.
+     */
+    init {
+        requestModelBuild()
+    }
 
     var selectionMap: HashMap<String, String>? = null
         set(value) {
