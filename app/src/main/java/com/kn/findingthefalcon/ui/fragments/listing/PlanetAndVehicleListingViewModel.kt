@@ -142,6 +142,9 @@ class PlanetAndVehicleListingViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Calculates total time for reaching the selected planets.
+     */
     private suspend fun getTotalTime(): Int {
        return withContext(Dispatchers.Default) {
             var totalTime = 0
@@ -154,10 +157,6 @@ class PlanetAndVehicleListingViewModel @Inject constructor(
                         */
                         _vehiclesData.value?.forEach { vehicle ->
                             if (vehicle.name == entry.value) {
-                                /**
-                                 * Vehicle for this planet has been found so now we
-                                 * will calculate time.
-                                 */
                                 /**
                                  * Vehicle for this planet has been found so now we
                                  * will calculate time.
@@ -196,6 +195,13 @@ class PlanetAndVehicleListingViewModel @Inject constructor(
         return inUseVehiclesCount < vehicle.totalNumber
     }
 
+    /**
+     * First validate the request then make api calls.
+     *
+     * if : selected planets < [REQUIRED_SELECTED_PLANETS_COUNT] return
+     * else : if -> token is not null make find falcon api call
+     *        else -> make token api call, when response received make find falcon api call
+     */
     fun findFalcon() {
         viewModelScope.launch {
             val planets = _selectionMap.keys.toList()
@@ -232,6 +238,9 @@ class PlanetAndVehicleListingViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Called when response of [findFalconUseCase] response is received
+     */
     private fun handleFindResponse(findResponse: ApiResponse<FindFalconResponse>) {
         findResponse.onSuccess {
             val data =this.data
