@@ -17,5 +17,5 @@ Supports multiple theme.
 
 
 ***Sample Images***
-* [apk/light_theme_selected_item.png]
-* [apk/dark_theme_selected_item.png]
+* [light theme] (apk/light_theme_selected_item.png)
+* [dark theme] (apk/dark_theme_selected_item.png)
