@@ -17,5 +17,5 @@ Supports multiple theme.
 
 
 ***Sample Images***
-* [light theme](apk/light_theme_selected_item.png)
-* [dark theme](https://github.com/userKamalNayan/Finding-Falcone/blob/main/apk/dark_theme_selected_item.png)
+* ![light theme](apk/light_theme_selected_item.png)
+* ![dark theme](https://github.com/userKamalNayan/Finding-Falcone/blob/main/apk/dark_theme_selected_item.png)
