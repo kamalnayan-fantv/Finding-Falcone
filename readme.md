@@ -4,6 +4,7 @@ Supports multiple theme.
 
 [Debug Apk](apk/Finding-Falcon-debug.apk)
 
+
 **Used**
   * Hilt for DI (In multiple modules)
   * Epoxy Recycler view, Used both ways:  
@@ -13,3 +14,8 @@ Supports multiple theme.
   * Retrofit for api calls
   * Made custom views 
   * Intuit [sdp](https://github.com/intuit/sdp) and [ssp](https://github.com/intuit/ssp)
+
+
+***Sample Images***
+* [apk/light_theme_selected_item.png]
+* [apk/dark_theme_selected_item.png]
