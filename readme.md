@@ -19,7 +19,7 @@ Supports multiple theme.
 ***Sample Images***
 |                                                        Light Theme                                                        | Dark Theme                                                                                                               |   |   |   |
 |:-------------------------------------------------------------------------------------------------------------------------:|--------------------------------------------------------------------------------------------------------------------------|---|---|---|
-| ![ light theme|100*200]( https://github.com/userKamalNayan/Finding-Falcone/assets/70440124/d6651672-6a12-4f81-8d54-feb84ab79371 ) | ![ dark theme|100*200]( https://github.com/userKamalNayan/Finding-Falcone/assets/70440124/83df1834-8c3e-4875-a190-516850a29506 ) |   |   |   |
+| (https://github.com/userKamalNayan/Finding-Falcone/assets/70440124/d6651672-6a12-4f81-8d54-feb84ab79371) | ![dark theme|100*200](https://github.com/userKamalNayan/Finding-Falcone/assets/70440124/83df1834-8c3e-4875-a190-516850a29506) |   |   |   |
 |                                                                                                                           |                                                                                                                          |   |   |   |
 |                                                                                                                           |                                                                                                                          |   |   |   |
 
