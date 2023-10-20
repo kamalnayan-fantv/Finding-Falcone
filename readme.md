@@ -17,5 +17,5 @@ Supports multiple theme.
 
 
 ***Sample Images***
-* ![light theme](apk/light_theme_selected_item.webp)
-* ![dark theme](apk/dark_theme_selected_item.webp)
+* ![light theme](https://github.com/userKamalNayan/Finding-Falcone/assets/70440124/d6651672-6a12-4f81-8d54-feb84ab79371)
+* ![dark theme](https://github.com/userKamalNayan/Finding-Falcone/assets/70440124/83df1834-8c3e-4875-a190-516850a29506)
