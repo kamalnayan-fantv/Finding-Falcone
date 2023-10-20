@@ -18,7 +18,7 @@ Supports multiple theme.
 
 ***Sample Images***
 
-|                                                 Light Theme                                                 |                                                 Dark Theme                                                  |
+|                                               **Light Theme**                                               |                                               **Dark Theme**                                                |
 |:-----------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------:|
 | ![](https://github.com/userKamalNayan/Finding-Falcone/assets/70440124/d6651672-6a12-4f81-8d54-feb84ab79371) | ![](https://github.com/userKamalNayan/Finding-Falcone/assets/70440124/83df1834-8c3e-4875-a190-516850a29506) |
 |                                                Falcon Found                                                 |                                                Falcon Found                                                 |
