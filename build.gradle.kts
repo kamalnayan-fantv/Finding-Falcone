@@ -6,4 +6,5 @@ plugins {
     id ("com.google.dagger.hilt.android") version "2.46.1" apply false
     id("androidx.navigation.safeargs.kotlin") version "2.5.1" apply false
     kotlin("kapt") version "1.9.10"
+    id("com.android.test") version "8.1.1" apply false
 }
