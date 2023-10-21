@@ -14,6 +14,7 @@ Supports multiple theme.
   * Retrofit for api calls
   * Made custom views 
   * Intuit [sdp](https://github.com/intuit/sdp) and [ssp](https://github.com/intuit/ssp)
+  * [Baseline Profile](https://developer.android.com/topic/performance/baselineprofiles/overview)
 
 
 ***Sample Images***
