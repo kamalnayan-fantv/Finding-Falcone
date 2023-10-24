@@ -1,4 +1,4 @@
-A multi-module project using clean architecture and following use-case pattern.
+sA multi-module project using clean architecture and following use-case pattern.
 Supports multiple theme.
 
 
@@ -17,7 +17,7 @@ Supports multiple theme.
   * [Baseline Profile](https://developer.android.com/topic/performance/baselineprofiles/overview)
 
 
-***Sample Images***
+***Screenshots***
 
 |                                               **Light Theme**                                               |                                               **Dark Theme**                                                |
 |:-----------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------:|
